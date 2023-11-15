@@ -1,5 +1,6 @@
 // imports the sum function witch will be tested from the API.js file
-const calculateRisk = require("./API.js");
+const request = require('supertest'); //needs to be added for testing server (see tests at bottom: npm install supertest)
+const { calculateRisk, server } = require("./API.js");
 
 test("claim with 3 key words to return Risk Rating 3", () => {
   expect(
@@ -25,7 +26,7 @@ test("claim with no keywords to return Risk Rating 1", () => {
     )
   ).toBe(1);
 });
-
+//because we changed the 
 test("claim with no statement to throw error: Error please provide claim history", () => {
   expect(calculateRisk("")).toBe("Error please provide claim history");
 });
@@ -45,3 +46,41 @@ test("claim with 1 key words, numbers and special characters to return Risk Rati
     )
   ).toBe(1);
 });
+
+
+//example of API test
+describe('Check the existence and opertion of the server', () => {
+
+  //to check the function itself
+  it('calculateRisk should exist and be a function', () => {
+    expect(calculateRisk).toBeDefined(); //Checks it is a defined value/type - is boolean
+    expect(typeof calculateRisk).toBe('function'); //Checked it is a function
+  });
+
+  //tests to check the API operates using the server
+  it('#2 should identify all 5 trigger words', async () => {
+    const response = await request(server)
+      .post('/calculateRisk')
+      .send({ 
+        "claim_history": "collide crash scratch bump smash" 
+    })
+      .expect(200);
+      const expectedResult = ({
+        "risk_rating": 5
+    })    
+    expect(response.body).toEqual(expectedResult);
+  });
+  it('should return the expected result of 2', async () => {
+    const response = await request(server)
+      .post('/calculateRisk')
+      .send({ 
+        "claim_history": "crash crash" 
+    });
+      const expectedResult = ({
+        "risk_rating": 2
+    })    
+    expect(response.body).toEqual(expectedResult);
+  });
+  
+})
+
