@@ -4,6 +4,7 @@
   "description": "",
   "main": "API.js",
   "scripts": {
+    "dev": "nodemon API.js",
     "test": "jest"
   },
   "keywords": [],
@@ -11,5 +12,13 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

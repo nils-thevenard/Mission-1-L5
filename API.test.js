@@ -1,5 +1,6 @@
 // imports the sum function witch will be tested from the API.js file
-const calculateRisk = require("./API.js");
+const request = require('supertest'); //needs to be added for testing server (see tests at bottom: npm install supertest)
+const { calculateRisk, server } = require("./API.js");
 
 test("claim with 3 key words to return Risk Rating 3", () => {
   expect(
@@ -25,7 +26,7 @@ test("claim with no keywords to return Risk Rating 1", () => {
     )
   ).toBe(1);
 });
-
+//because we changed the way error handling happens this test will need upadting to match the receieved response
 test("claim with no statement to throw error: Error please provide claim history", () => {
   expect(calculateRisk("")).toBe("Error please provide claim history");
 });
@@ -45,3 +46,41 @@ test("claim with 1 key words, numbers and special characters to return Risk Rati
     )
   ).toBe(1);
 });
+
+
+//example of API testing
+describe('Check the existence of the function and operation of the server', () => {
+
+  //to check existence of the function itself (does not go through server)
+  it('calculateRisk should exist and be a function', () => {
+    expect(calculateRisk).toBeDefined(); //Checks it is a defined value/type - is boolean
+    expect(typeof calculateRisk).toBe('function'); //Checked it is a function
+  });
+
+  //tests to check the API operates using the server
+  it('#2 should identify all 5 trigger words', async () => {
+    const response = await request(server)
+      .post('/calculateRisk') //path to query
+      .send({  //JSON data sent to server
+        "claim_history": "collide crash scratch bump smash" 
+    })
+      .expect(200);
+      const expectedResult = ({ //JSON data received back from server
+        "risk_rating": 5
+    })    
+    expect(response.body).toEqual(expectedResult);
+  });
+  it('should return the expected result of 2', async () => {
+    const response = await request(server)
+      .post('/calculateRisk')
+      .send({ 
+        "claim_history": "crash crash" 
+    });
+      const expectedResult = ({
+        "risk_rating": 2
+    })    
+    expect(response.body).toEqual(expectedResult);
+  });
+  
+})
+
