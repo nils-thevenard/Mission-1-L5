@@ -18,6 +18,7 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: '@octocat'
       - run: npm install
+      - run: npm install jest
       - run: npm test -- --coverage
 
       - name: Archive production artifacts
