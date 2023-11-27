@@ -1,3 +1,5 @@
+//Making an update for the lecture!
+
 // API 2 converting claim history into a rating
 
 //we should seperate the function and supply it through server
