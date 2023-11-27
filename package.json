@@ -5,7 +5,7 @@
   "main": "API.js",
   "scripts": {
     "dev": "nodemon API.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
