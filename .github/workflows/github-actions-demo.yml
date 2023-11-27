@@ -19,7 +19,7 @@ jobs:
           scope: "@octocat"
       - run: npm install
       - run: npm run build
-      - run: npm test -- --coverage
+      - run: npm test --coverage
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
