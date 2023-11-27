@@ -26,7 +26,7 @@ test("claim with no keywords to return Risk Rating 1", () => {
     )
   ).toBe(1);
 });
-//because we changed the way error handling happens this test will need updting to match the receieved response
+//because we changed the way error handling happens this test will need updating to match the received response
 // test("claim with no statement to throw error: Error please provide claim history", () => {
 //   expect(calculateRisk("")).toBe("Error please provide claim history");
 // });
