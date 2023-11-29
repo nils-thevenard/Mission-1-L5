@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon API.js",
     "test": "jest --coverage",
-    "run": "npm run"
+    "run": "npm run",
+    "docs": "build"
   },
   "keywords": [],
   "author": "",
